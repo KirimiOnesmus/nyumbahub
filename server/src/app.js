@@ -95,11 +95,27 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false, limit: "100kb" }));
 app.use(cookieParser(env.COOKIE_SECRET));
-app.use(mongoSanitize());
+app.use((req, res, next) => {
+  // Meta's WhatsApp webhook verification handshake requires literal dotted
+  // query param names (hub.mode, hub.verify_token, hub.challenge) — that's
+  // Meta's spec, not ours, and can't be changed. express-mongo-sanitize
+  // strips keys containing "." by default, which silently breaks this
+  // specific handshake. Every other route, including this same webhook's
+  // POST status body, stays fully sanitized.
+  if (req.method === 'GET' && req.path === '/api/v1/webhooks/whatsapp/status') {
+    return next();
+  }
+  return mongoSanitize()(req, res, next);
+});
 app.use(hpp());
 app.use(globalLimiter);
 
 //  Routes
+// Public/unauthenticated routes are mounted FIRST and deliberately isolated from the authenticated routers below.
+
+app.use("/api/v1", webhookRoutes);
+app.use("/api/v1", publicBillRoute);
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1", ownerRoutes);
 app.use("/api/v1", buildingRoutes);
@@ -107,10 +123,8 @@ app.use("/api/v1", caretakerRoutes);
 app.use("/api/v1", tenantRoutes);
 app.use("/api/v1", billRoutes);
 app.use("/api/v1", expenseRoutes);
-app.use("/api/v1", publicBillRoute);
 app.use("/api/v1", unitRoutes);
 app.use("/api/v1", paymentRoutes);
-app.use("/api/v1", webhookRoutes);
 app.use('/api/v1', announcementRoutes);
 app.use('/api/v1', reportRoutes);
 app.use('/api/v1', adminRoutes);

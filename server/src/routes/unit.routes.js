@@ -14,7 +14,12 @@ const tenantController = require('../controllers/tenant.controller');
 
 const router = Router();
 
-router.use(requireAuth, requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN), attachBuildingScope);
+router.use(
+  ['/units', '/buildings/:buildingId/units'],
+  requireAuth,
+  requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN),
+  attachBuildingScope
+);
 
 
 router.post(

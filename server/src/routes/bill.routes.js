@@ -18,7 +18,12 @@ const {
 
 const router = Router();
 
-router.use(requireAuth, requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN), attachBuildingScope);
+router.use(
+  ['/bills', '/buildings/:buildingId/bills'],
+  requireAuth,
+  requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN),
+  attachBuildingScope
+);
 
 router.post('/bills', validate({ body: createBillSchema }), billController.createBill);
 

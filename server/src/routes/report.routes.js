@@ -13,7 +13,7 @@ const {
 } = require('../utils/validators/report.validators');
 const router = Router();
 
-router.use(requireAuth, attachBuildingScope);
+router.use('/reports', requireAuth, attachBuildingScope);
 
 router.get(
   '/reports/portfolio',

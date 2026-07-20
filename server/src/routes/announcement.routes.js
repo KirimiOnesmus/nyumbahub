@@ -16,7 +16,12 @@ const {
 
 const router = Router();
 
-router.use(requireAuth, requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN), attachBuildingScope);
+router.use(
+  ['/buildings/:buildingId/announcements', '/buildings/:buildingId/tenants/:tenantId/announcements'],
+  requireAuth,
+  requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN),
+  attachBuildingScope
+);
 
 router.post(
   '/buildings/:buildingId/announcements',

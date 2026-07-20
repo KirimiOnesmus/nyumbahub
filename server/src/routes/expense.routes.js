@@ -17,7 +17,12 @@ const {
 
 const router = Router();
 
-router.use(requireAuth, requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN), attachBuildingScope);
+router.use(
+  ['/expenses', '/buildings/:buildingId/expenses'],
+  requireAuth,
+  requireRole(ROLES.OWNER, ROLES.CARETAKER, ROLES.ADMIN),
+  attachBuildingScope
+);
 
 router.post(
   '/expenses',
