@@ -117,7 +117,7 @@ const Tenants = () => {
         render: (r) => (
           <button
             type="button"
-            onClick={() => navigate(`/caretaker/tenants/${r._id}`)}
+            onClick={() => navigate(`/caretaker/tenants/${r.id}`)}
             className="flex items-center gap-1 text-xs font-semibold text-brand-700 hover:text-brand-800 transition-colors cursor-pointer"
           >
             View

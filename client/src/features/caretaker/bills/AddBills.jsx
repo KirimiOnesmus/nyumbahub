@@ -198,7 +198,7 @@ const AddBills = () => {
         setTenants(active);
         setTenantRows(
           active.map((t) => ({
-            id: t._id,
+            id: t.id,
             label: `${t.userId?.name ?? "Unknown"} — Unit ${t.unitId?.unitNumber ?? "—"}`,
             selected: false,
             amount: "",
@@ -436,7 +436,7 @@ const AddBills = () => {
                           : "Select a tenant"}
                     </option>
                     {tenants.map((t) => (
-                      <option key={t._id} value={t._id}>
+                      <option key={t.id} value={t.id}>
                         {t.userId?.name ?? "Unknown"} — Unit{" "}
                         {t.unitId?.unitNumber ?? "—"}
                       </option>

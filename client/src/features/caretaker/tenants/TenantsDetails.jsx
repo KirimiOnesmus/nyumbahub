@@ -125,7 +125,7 @@ const TenantsDetails = () => {
         </div>
         <button
           type="button"
-          onClick={() => navigate('/caretaker/payments/add', { state: { tenantId: tenant._id, unitId: unit.id } })}
+          onClick={() => navigate('/caretaker/payments/add', { state: { tenantId: tenant.id, unitId: unit.id } })}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-700 hover:bg-brand-800 text-white text-sm font-semibold transition-colors cursor-pointer shrink-0"
         >
           <LuCirclePlus aria-hidden="true" />
@@ -153,15 +153,12 @@ const TenantsDetails = () => {
 
       <div>
         <h3 className="text-sm font-bold text-slate-900 mb-4">Payment History</h3>
-        {/* TODO: the backend has no per-tenant payment history endpoint yet —
-            only /bills/:id/payments (per-bill) and /buildings/:buildingId/payments
-            (building-wide, capped at 20, no tenant filter) exist. Swap this
-            EmptyState out once a GET /tenants/:id/payments route is added. */}
+    
         <Card className="p-0">
           <EmptyState
             icon={LuWallet}
             title="Payment history isn't available yet"
-            description="This view needs a backend endpoint for per-tenant payments — it hasn't been built."
+            description="This view needs a backend endpoint for per-tenant payments."
           />
         </Card>
       </div>

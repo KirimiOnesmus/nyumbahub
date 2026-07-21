@@ -204,10 +204,10 @@ const UnitsDetail = () => {
       {currentTenant && (
         <button
           type="button"
-          onClick={() => navigate(`/caretaker/tenants/${currentTenant._id}`)}
+          onClick={() => navigate(`/caretaker/tenants/${currentTenant.id}`)}
           className="self-start flex items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-800 hover:underline transition-colors cursor-pointer"
         >
-          View tenant profile →
+          View tenant profile 
         </button>
       )}
 
@@ -215,10 +215,7 @@ const UnitsDetail = () => {
         <h3 className="text-sm font-bold text-slate-900 mb-4">
           Tenant History
         </h3>
-        {/* TODO: no backend support for this yet. listTenants only returns
-            pending/active TenantProfiles — moved_out ones are excluded — and
-            there's no endpoint to list all profiles (including past ones)
-            for a given unit. Needs something like GET /units/:id/tenant-history. */}
+
         <Card className="p-0">
           <EmptyState
             icon={LuUserRound}
