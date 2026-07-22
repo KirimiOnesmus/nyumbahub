@@ -3,10 +3,7 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
-  // Without a timeout, a dropped connection or hung backend leaves the
-  // request promise pending forever — the calling component's `finally`
-  // never runs, so `loading` state never clears. Fail after a bounded
-  // window instead of hanging indefinitely.
+
   timeout: 15000,
 });
 

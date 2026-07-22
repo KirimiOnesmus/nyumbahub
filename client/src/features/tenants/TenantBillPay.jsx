@@ -33,13 +33,13 @@ const Card = ({ children }) => (
 const TenantBillPay = () => {
   const { token } = useParams();
 
-  const [pageState, setPageState] = useState('loading'); // loading | invalid | ready
+  const [pageState, setPageState] = useState('loading'); 
   const [invalidReason, setInvalidReason] = useState('');
   const [bill, setBill] = useState(null);
 
   const [phone, setPhone] = useState('');
   const [phoneError, setPhoneError] = useState('');
-  const [payState, setPayState] = useState('idle'); // idle | initiating | waiting | success | failed
+  const [payState, setPayState] = useState('idle');
   const [payError, setPayError] = useState('');
 
   const pollRef = useRef(null);
@@ -49,6 +49,7 @@ const TenantBillPay = () => {
       const data = await getBill(token);
       setBill(data);
       setPageState('ready');
+      console.log('Bill data loaded:', data);
     } catch (err) {
       setInvalidReason(err.message || 'This link is no longer valid.');
       setPageState('invalid');
