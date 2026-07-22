@@ -9,7 +9,7 @@ async function getBillPayment(req, res, next) {
     if (!result) {
       throw new AppError('This payment link is invalid or no longer active.', 404);
     }
-    res.status(200).json({ success: true, data: { bill: result } });
+    res.status(200).json({ success: true, data: result });
   } catch (err) {
     next(err);
   }
