@@ -98,7 +98,6 @@ async function writeTenantRecords(session, { unitId, fullName, phone, email, idT
   return { user, tenantProfile: tenantProfile[0] };
 }
 
-// Entry point 1: invite-based self-registration (TenantRegister.jsx)
 async function onboardViaInvite({ token, fullName, phone, email, idType, idNumber }) {
   const invite = await inviteService.validateInvite(token);
   if (invite.type !== 'tenant_invite') throw AppError.badRequest('Invalid invite type');
@@ -142,7 +141,7 @@ async function onboardViaInvite({ token, fullName, phone, email, idType, idNumbe
   }
 }
 
-// Entry point 2: Caretaker/Owner direct-add no invite involved
+
 
 async function createTenantDirect(req, data) {
   const unit = await Unit.findById(data.unitId);
@@ -191,7 +190,7 @@ async function createTenantDirect(req, data) {
   }
 }
 
-// Validate-only — powers the "You're joining X, unit Y" screen before submission.
+
 
 async function getInviteInfo(token) {
   const invite = await inviteService.validateInvite(token);
@@ -207,7 +206,7 @@ async function getInviteInfo(token) {
   };
 }
 
-//GET /buildings/:buildingId/tenants 
+
 
 async function listTenants(req, buildingId, { page = 1, limit = DEFAULT_PAGE_SIZE } = {}) {
   await loadScopedBuilding(req, buildingId);
@@ -249,7 +248,7 @@ async function getTenant(req, tenantProfileId) {
   return profile;
 }
 
-// POST /tenants/:id/move-out 
+
 
 async function moveOutTenant(req, tenantProfileId) {
   const profile = await TenantProfile.findById(tenantProfileId).populate('unitId', 'buildingId');
@@ -283,7 +282,7 @@ async function moveOutTenant(req, tenantProfileId) {
   }
 }
 
-/// POST /units/:id/invite-link 
+
 async function createInviteLink(req, unitId) {
   const unit = await Unit.findById(unitId);
   if (!unit || unit.isArchived) throw AppError.notFound('Unit not found');

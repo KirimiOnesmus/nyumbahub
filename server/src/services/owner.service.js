@@ -12,10 +12,7 @@ const { generateTempPassword } = require('../utils/tempPassword');
 const { NOTIFICATION_STATUS, ROLE_LABELS } = require('../config/constants');
 const env = require('../config/env');
 
-// NOTE: this link points at a public frontend route (owner invite acceptance
-// screen) that does not exist in the client yet. It must be built — and
-// wired to POST /owner-invites/:token/accept — before invite sends are
-// useful end to end.
+
 function buildOwnerInviteLink(token) {
   return `${env.APP_BASE_URL.replace(/\/$/, '')}/accept-invite/owner/${token}`;
 }
@@ -45,9 +42,7 @@ async function createOwnerDirect({ name, phone, email, invitedBy }) {
     'Owner account created directly by Admin'
   );
 
-  // The temp password is transmitted out-of-band over WhatsApp ONLY — it is
-  // never returned in this response, logged, or otherwise persisted in
-  // plaintext (passwordHash above is the only stored copy).
+
   const delivery = await notificationService.sendWelcomeCredentialsWithRetry(phone, {
     name,
     roleLabel: ROLE_LABELS.owner,
@@ -70,13 +65,7 @@ async function createOwnerDirect({ name, phone, email, invitedBy }) {
   };
 }
 
-/**
- * Re-sends fresh temp-password credentials for an existing (already
- * created) owner — the recovery path when the original WhatsApp send
- * failed, or the owner lost the message. Rotates the password and revokes
- * existing sessions so a stale/failed-delivery password can't linger as a
- * valid credential.
- */
+
 async function resendOwnerCredentials({ ownerId, actorId }) {
   const owner = await User.findOne({ _id: ownerId, role: ROLES.OWNER });
   if (!owner) throw AppError.notFound('Owner not found');
@@ -102,7 +91,7 @@ async function resendOwnerCredentials({ ownerId, actorId }) {
   return { status: delivery.status, attempts: delivery.attempts };
 }
 
-/** Admin sends an invite link instead of creating the account directly. */
+
 
 async function inviteOwner({ phone, name, email, invitedBy }) {
   const existing = await User.findOne({ phone }).lean();
@@ -129,9 +118,9 @@ async function inviteOwner({ phone, name, email, invitedBy }) {
   return { invite, inviteDelivery: { status: delivery.status, attempts: delivery.attempts } };
 }
 
-/** Re-sends the invite link for a still-pending owner invite. */
+
 async function resendOwnerInvite({ inviteId, actorId }) {
-  const invite = await inviteService.findPendingInviteById(inviteId); // throws if expired/revoked/accepted — cannot resend a dead invite
+  const invite = await inviteService.findPendingInviteById(inviteId); 
   if (invite.type !== 'owner_invite') throw AppError.notFound('Invite not found');
 
   const delivery = await notificationService.sendInviteWithRetry(invite.phone, {
@@ -148,8 +137,7 @@ async function resendOwnerInvite({ inviteId, actorId }) {
   return { status: delivery.status, attempts: delivery.attempts };
 }
 
-/**
- * Invited person accepts: sets their own password, activating the account.*/
+
 
 async function acceptOwnerInvite({ token, password }) {
   const session = await mongoose.startSession();
@@ -208,7 +196,6 @@ async function listOwners({ page = 1, limit = DEFAULT_PAGE_SIZE } = {}) {
   };
 }
 
-/** Single owner, with the buildings they own — matches the admin UI's OwnerDetails contract. */
 async function getOwner(ownerId) {
   const owner = await User.findOne({ _id: ownerId, role: ROLES.OWNER });
   if (!owner) throw AppError.notFound('Owner not found');
@@ -240,8 +227,6 @@ async function updateOwner(ownerId, updates) {
   return owner.toJSON();
 }
 
-/** Soft deactivate — does not delete the owner's buildings. For a full destructive
- *  delete (owner + buildings + cascades), see admin.service.js's deleteUser. */
 async function deactivateOwner(ownerId) {
   const owner = await User.findOne({ _id: ownerId, role: ROLES.OWNER });
   if (!owner) throw AppError.notFound('Owner not found');

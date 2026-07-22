@@ -68,10 +68,7 @@ async function acceptInvite(token, createdUserId) {
   return invite;
 }
 
-/** Looked up by _id (what admin UIs have on hand) rather than token (which is
- * the bearer secret and shouldn't need to be re-supplied to trigger a resend).
- * Re-validates expiry the same way validateInvite does, so a resend can never
- * revive a dead invite. */
+
 async function findPendingInviteById(inviteId) {
   const invite = await Invite.findById(inviteId);
   if (!invite) throw AppError.notFound('Invite not found');

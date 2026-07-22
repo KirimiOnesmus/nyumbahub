@@ -44,7 +44,6 @@ async function validateMobileNumber({ phone, idType, idNumber }) {
       }
     );
 
-    // Per Safaricom's spec, `status` is the string "true"/"false", not a JSON boolean.
     return String(response.data?.status).toLowerCase() === 'true';
   } catch (err) {
     const darajaErrorCode = err.response?.data?.errorCode;

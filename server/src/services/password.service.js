@@ -17,7 +17,7 @@ async function requestPasswordReset(phone) {
   const user = await User.findOne({ phone });
   if (!user || !user.isActive) {
     logger.info({ phone }, 'Password reset requested for unknown/inactive account — no-op');
-    return; // caller always sees the same generic success message
+    return; 
   }
 
   const rawToken = crypto.randomBytes(PASSWORD_RESET_TOKEN_BYTES).toString('hex');
@@ -51,8 +51,7 @@ async function resetPassword({ token, newPassword }) {
   user.lockedUntil = null;
   await user.save();
 
-  // Password reset invalidates every existing session — if the reset was triggered because credentials leaked, an attacker's live session (if any) must not survive the legitimate owner regaining control.
-  
+
   await revokeAllUserTokens(user._id);
 
   logger.info({ userId: user._id.toString() }, 'Password reset completed, all sessions revoked');
@@ -73,8 +72,7 @@ async function changePassword({ userId, currentPassword, newPassword }) {
   user.passwordHash = await User.hashPassword(newPassword);
   await user.save();
 
-  // Same reasoning as resetPassword — force re-authentication everywhere.
-  
+
   await revokeAllUserTokens(user._id);
 
   logger.info({ userId: user._id.toString() }, 'Password changed, all sessions revoked');

@@ -18,7 +18,6 @@ function buildLoginUrl() {
   return `${env.APP_BASE_URL.replace(/\/$/, '')}/login`;
 }
 
-/**Validates every buildingId in the request is (a) a real, non-archived building and (b) within the caller's own scope. */
 
 async function assertBuildingsOwnedAndInScope(req, buildingIds) {
   const uniqueIds = [...new Set(buildingIds.map(String))];
@@ -31,7 +30,7 @@ async function assertBuildingsOwnedAndInScope(req, buildingIds) {
   }
 
   for (const id of uniqueIds) {
-    assertBuildingInScope(req, id); // throws 404 if out of scope — no existence-leak
+    assertBuildingInScope(req, id); 
   }
 
   return uniqueIds;
@@ -67,7 +66,7 @@ async function createCaretaker(req, { name, phone, email, buildingIds }) {
       'Caretaker created and assigned'
     );
 
-    // Sent out-of-band via WhatsApp only — never returned in the HTTP response.
+   
     const delivery = await notificationService.sendWelcomeCredentialsWithRetry(phone, {
       name,
       roleLabel: ROLE_LABELS.caretaker,
@@ -92,8 +91,6 @@ async function createCaretaker(req, { name, phone, email, buildingIds }) {
   }
 }
 
-/** Recovery path for a failed/lost initial delivery. Rotates the password and
- * revokes existing sessions so the old (possibly-undelivered) one can't be used. */
 async function resendCaretakerCredentials(req, caretakerId) {
   const caretaker = await User.findOne({ _id: caretakerId, role: ROLES.CARETAKER });
   if (!caretaker) throw AppError.notFound('Caretaker not found');
@@ -124,7 +121,6 @@ async function resendCaretakerCredentials(req, caretakerId) {
   return { status: delivery.status, attempts: delivery.attempts };
 }
 
-/** Building IDs a caretaker is assigned to, filtered to the caller's own scope. */
 
 async function getScopedAssignments(req, caretakerId) {
   const filter = { caretakerId };
@@ -179,8 +175,7 @@ async function getCaretaker(req, caretakerId) {
   const assignments = await getScopedAssignments(req, caretakerId);
   if (!req.buildingScope.unrestricted && assignments.length === 0) {
 
-    // Caretaker exists, but has no assignment within this caller's scope —treat as not found rather than leaking that the account exists.
-   
+
     throw AppError.notFound('Caretaker not found');
   }
 
@@ -188,7 +183,7 @@ async function getCaretaker(req, caretakerId) {
 }
 
 async function updateCaretaker(req, caretakerId, updates) {
-  await getCaretaker(req, caretakerId); // throws if not accessible in scope
+  await getCaretaker(req, caretakerId);
 
   const caretaker = await User.findOne({ _id: caretakerId, role: ROLES.CARETAKER });
   const wasActive = caretaker.isActive;
@@ -222,7 +217,7 @@ async function assignCaretakerToBuilding(req, caretakerId, buildingId) {
   logger.info({ caretakerId, buildingId, assignedBy: req.user.id }, 'Caretaker assigned to building');
 }
 
-/** Soft deactivate — preserves CaretakerAssignment history for audit purposes. */
+
 
 async function deactivateCaretaker(req, caretakerId) {
   await getCaretaker(req, caretakerId); 

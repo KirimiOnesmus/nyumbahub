@@ -32,9 +32,6 @@ function serializeExpense(expense) {
   };
 }
 
-// POST /expenses — any of caretaker/owner/admin, scoped to a building they
-// have access to. loggedBy/loggedByRole are always derived from the
-// authenticated actor, never accepted from the request body.
 async function createExpense(req, input) {
   const building = await loadScopedBuilding(req, input.buildingId);
 
@@ -56,11 +53,6 @@ async function createExpense(req, input) {
   return serializeExpense(expense);
 }
 
-// GET /buildings/:buildingId/expenses
-// Business rule: caretakers only ever see the expenses *they* logged for
-// this building; owners/admins see every caretaker's entries for buildings
-// they own. The route also runs requireBuildingAccess — this re-check is
-// intentional defense in depth, not redundancy we can safely drop.
 async function listExpensesForBuilding(req, buildingId, query) {
   assertBuildingInScope(req, buildingId);
 
@@ -108,9 +100,6 @@ async function listExpensesForBuilding(req, buildingId, query) {
   };
 }
 
-// GET /expenses/:id — object-level authorization: building scope first,
-// then (for caretakers only) an explicit ownership check so a caretaker
-// cannot enumerate another caretaker's expense by guessing/incrementing ids.
 async function getExpenseById(req, expenseId) {
   const expense = await Expense.findById(expenseId)
     .populate({ path: 'buildingId', select: 'name' })
@@ -123,8 +112,7 @@ async function getExpenseById(req, expenseId) {
   assertBuildingInScope(req, expense.buildingId._id);
 
   if (req.user.role === ROLES.CARETAKER && expense.loggedBy._id.toString() !== req.user.id) {
-    // Same response as "doesn't exist" — never reveal that a resource
-    // exists but belongs to someone else.
+
     throw AppError.notFound(GENERIC_NOT_FOUND);
   }
 
@@ -135,6 +123,6 @@ module.exports = {
   createExpense,
   listExpensesForBuilding,
   getExpenseById,
-  // exported for direct unit testing
+
   serializeExpense,
 };

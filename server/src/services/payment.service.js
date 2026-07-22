@@ -23,7 +23,7 @@ const {
 } = require('../config/constants');
 
 const SETTLED_STATUSES = new Set([BILL_STATUS.PAID, BILL_STATUS.PAID_EARLY, BILL_STATUS.PAID_LATE]);
-const PENDING_PUSH_REUSE_WINDOW_MS = 2 * 60 * 1000; // matches typical Daraja STK prompt lifetime
+const PENDING_PUSH_REUSE_WINDOW_MS = 2 * 60 * 1000;
 
 function roundMoney(value) {
   return Math.round(value * 100) / 100;
@@ -99,7 +99,7 @@ function extractMetadataValue(callbackMetadata, name) {
   return item ? item.Value : null;
 }
 
-/** Daraja sends TransactionDate as an integer YYYYMMDDHHmmss, Nairobi local time (fixed UTC+3, no DST). */
+
 function parseDarajaTransactionDate(value) {
   const s = String(value);
   const iso = `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}T${s.slice(8, 10)}:${s.slice(10, 12)}:${s.slice(12, 14)}+03:00`;
@@ -191,8 +191,7 @@ async function handleMpesaCallback(payload) {
       'M-Pesa payment completed, bill updated'
     );
 
-    // Only on FULL settlement — a partial M-Pesa contribution doesn't merit
-    // a "payment confirmed" message, only the bill's final settlement does.
+ 
     if (SETTLED_STATUSES.has(bill.status)) {
       dispatchPaymentConfirmedNotification(bill).catch((err) => {
         logger.error(
@@ -228,13 +227,7 @@ async function listPaymentsForBill(req, billId) {
   }));
 }
 
-/**
- * Most recent COMPLETED (M-Pesa) payments across an entire building, newest
- * first — used by the dashboard's "Recent Payments" panel. Unlike
- * listPaymentsForBill (single bill), this fans out unit -> bill -> payment,
- * so it stays a few lean() queries joined in-memory rather than a driver-level
- * aggregation pipeline, consistent with the rest of this codebase.
- */
+
 async function listRecentPaymentsForBuilding(req, buildingId, limit = 5) {
   const building = await loadScopedBuilding(req, buildingId);
 

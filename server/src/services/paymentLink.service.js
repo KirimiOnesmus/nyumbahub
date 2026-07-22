@@ -66,7 +66,7 @@ async function validatePaymentLink(rawToken) {
 
   const bill = await Bill.findById(link.billId);
   if (!bill) {
-    return null; // orphaned link — treat identically to "not found"
+    return null; 
   }
 
   if (!isLinkStillValid(bill, link)) {
@@ -82,7 +82,7 @@ async function validatePaymentLink(rawToken) {
     amountPaid: bill.amountPaid,
     balance: Math.round((bill.amount - bill.amountPaid) * 100) / 100,
     dueDate: bill.dueDate,
-    status: bill.status, // raw, not collapsed — see doc comment above
+    status: bill.status, 
     buildingName: unit?.buildingId?.name ?? null,
     unitLabel: unit?.unitNumber ?? null,
     description: `${BILL_TYPE_LABELS[bill.type]} — ${bill.period}`,
@@ -112,7 +112,7 @@ async function resolveBillIdForToken(rawToken) {
 }
 
 function buildPaymentUrl(rawToken) {
-  return `${env.APP_BASE_URL.replace(/\/$/, '')}/pay/${rawToken}`;
+  return `${env.APP_BASE_URL.replace(/\/$/, '')}/bill/${rawToken}`;
 }
 
 module.exports = {

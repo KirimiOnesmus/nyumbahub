@@ -91,8 +91,7 @@ async function changeUserPhone(userId, phone, adminUser) {
   user.phone = phone;
   await user.save();
 
-  // Login identifier changed — any existing session was authenticated
-  // against the old identity, so force re-authentication everywhere.
+
   await revokeAllUserTokens(user._id);
 
   logger.info(
@@ -126,8 +125,7 @@ async function resetUserPassword(userId, adminUser) {
   user.passwordResetExpiresAt = null;
   await user.save();
 
-  // Same reasoning as every other password change in this app: invalidate
-  // every existing session once the credential changes.
+
   await revokeAllUserTokens(user._id);
 
   logger.info(
@@ -145,22 +143,14 @@ async function resetUserPassword(userId, adminUser) {
   return { temporaryPassword };
 }
 
-/** Caretaker deletion is always a hard delete — the account and every
- *  building assignment it holds are removed entirely. Used both for a
- *  direct admin delete of a caretaker, and as part of an owner's cascade. */
+
 async function deleteCaretakerAccount(caretaker, session) {
   await CaretakerAssignment.deleteMany({ caretakerId: caretaker._id }).session(session);
   await RefreshToken.deleteMany({ userId: caretaker._id }).session(session);
   await User.deleteOne({ _id: caretaker._id }).session(session);
 }
 
-/** Deleting an owner cascades through everything they own:
- *  - buildings and units are hard-deleted (structural, no life outside the owner)
- *  - caretakers assigned to those buildings are hard-deleted entirely
- *  - tenants in those units are soft-archived (moved_out + deactivated), not
- *    deleted, so their bills/payments/notification history stays intact
- *  - bills, payments, expenses, announcements, notification logs are left
- *    untouched as historical/audit records */
+
 async function deleteOwnerCascade(owner, adminUser) {
   const buildings = await Building.find({ ownerId: owner._id }).select('_id').lean();
   const buildingIds = buildings.map((b) => b._id);
@@ -173,7 +163,7 @@ async function deleteOwnerCascade(owner, adminUser) {
   try {
     await session.withTransaction(async () => {
       if (buildingIds.length > 0) {
-        // Caretakers assigned to these buildings — deleted entirely.
+       
         const assignments = await CaretakerAssignment.find({ buildingId: trustedIn(buildingIds) })
           .select('caretakerId')
           .session(session);
@@ -188,10 +178,10 @@ async function deleteOwnerCascade(owner, adminUser) {
           }).session(session);
           deletedCaretakerCount = result.deletedCount;
         }
-        // Catch any assignments left pointing at these buildings regardless of caretaker.
+
         await CaretakerAssignment.deleteMany({ buildingId: trustedIn(buildingIds) }).session(session);
 
-        // Units + tenants under these buildings.
+        
         const units = await Unit.find({ buildingId: trustedIn(buildingIds) }).select('_id').session(session);
         const unitIds = units.map((u) => u._id);
         deletedUnitCount = unitIds.length;
@@ -208,8 +198,7 @@ async function deleteOwnerCascade(owner, adminUser) {
             const tenantProfileIds = tenantProfiles.map((t) => t._id);
             const tenantUserIds = [...new Set(tenantProfiles.map((t) => t.userId.toString()))];
 
-            // Soft-archive: keep the tenant record and their financial
-            // history, just mark them moved out and deactivate login.
+    
             await TenantProfile.updateMany(
               { _id: trustedIn(tenantProfileIds) },
               { $set: { status: TENANT_STATUS.MOVED_OUT, moveOutDate: new Date() } }
@@ -261,9 +250,7 @@ async function deleteOwnerCascade(owner, adminUser) {
   return { deleted: true, role: ROLES.OWNER, cascade };
 }
 
-/** Admin deletes an owner or caretaker account. Owners cascade through their
- *  buildings (see deleteOwnerCascade); caretakers are simply removed along
- *  with their building assignments. */
+
 async function deleteUser(userId, adminUser) {
   const user = await User.findById(userId);
   if (!user) throw AppError.notFound('User not found');
@@ -307,11 +294,7 @@ async function measureDbLatencyMs() {
   }
 }
 
-// DB status is a live check. WhatsApp/M-Pesa are reported from validated
-// env config only (env.js already refuses to boot without them) — this
-// intentionally does NOT make a live call to either third-party API on
-// every health poll, to avoid burning real quota/rate limits against
-// production credentials just to paint a dashboard.
+
 async function getSystemHealth() {
   const now = new Date();
   const dbLatencyMs = await measureDbLatencyMs();

@@ -7,7 +7,7 @@ const AppError = require('../utils/AppError');
 const { getAccessToken, BASE_URL } = require('./darajaAuth.service');
 
 function darajaTimestamp() {
-  // YYYYMMDDHHmmss, required by Daraja for the password hash below.
+ 
   const d = new Date();
   const pad = (n) => String(n).padStart(2, '0');
   return (
