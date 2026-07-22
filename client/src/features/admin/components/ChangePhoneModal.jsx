@@ -10,11 +10,7 @@ const inputClasses =
 
 const labelClasses = 'text-xs font-semibold uppercase tracking-widest text-slate-500';
 
-/**
- * Admin-only: repoints the login phone number for a caretaker or owner
- * account. `person` needs { id, name, phone }. Calls onSaved(newPhone) once
- * the backend confirms the change.
- */
+
 const ChangePhoneModal = ({ person, onClose, onSaved }) => {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState(null);

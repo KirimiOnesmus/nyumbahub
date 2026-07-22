@@ -5,7 +5,7 @@ import Card from '../../../components/common/Card.jsx';
 import { listBuildings } from '../../../services/building.service.js';
 import { createAnnouncement } from '../../../services/announcement.service.js';
 
-const MESSAGE_MAX_LENGTH = 1000; // matches ANNOUNCEMENT_MESSAGE_MAX_LENGTH on the backend
+const MESSAGE_MAX_LENGTH = 1000; 
 
 const AUDIENCE_OPTIONS = [
   { id: 'portfolio', label: 'Entire Portfolio', description: 'Every active tenant across all your buildings', icon: LuGlobe },
@@ -24,7 +24,7 @@ const AddNotification = () => {
   const [buildingId, setBuildingId] = useState('');
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState(null); // { recipientCount, successCount, failureCount }
+  const [result, setResult] = useState(null); 
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -77,8 +77,7 @@ const AddNotification = () => {
     try {
       const targetBuildingIds = audience === 'portfolio' ? buildings.map((b) => b.id) : [buildingId];
 
-      // No portfolio-wide send endpoint exists — a "portfolio" announcement is a
-      // real broadcast to every building, one request each, aggregated below.
+  
       const results = await Promise.all(
         targetBuildingIds.map((id) => createAnnouncement(id, message.trim()))
       );

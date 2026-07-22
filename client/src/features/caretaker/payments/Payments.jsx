@@ -9,14 +9,6 @@ import { formatCurrency, formatDate } from '../../../components/constast/Constas
 import { getBuildings } from '../../../services/building.service.js';
 import { getBuildingPayments } from '../../../services/payment.service.js';
 
-// GET /buildings/:buildingId/payments only ever returns the most recent
-// COMPLETED M-Pesa payments for a building, capped at 20 by the backend's
-// validator (utils/validators/payment.validators.js). There is no
-// pagination cursor and no cross-building aggregate — so unlike Bills,
-// this list is deliberately a bounded "recent activity" view, not a full
-// payment ledger. Manual (cash/bank) settlements aren't recorded here at
-// all: they're reconciled directly on a bill via mark-paid and never
-// become a Payment document (see AddPayments.jsx).
 const RECENT_PAYMENTS_LIMIT = 20;
 
 const selectClasses =

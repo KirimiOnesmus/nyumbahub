@@ -32,7 +32,6 @@ const Tenants = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
 
-  // Load the caretaker's assigned buildings once.
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
@@ -55,7 +54,7 @@ const Tenants = () => {
     };
   }, []);
 
-  // Load tenants for whichever building is selected.
+
   useEffect(() => {
     if (!buildingId) {
       setTenants([]);

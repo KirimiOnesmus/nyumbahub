@@ -55,8 +55,7 @@ const TenantDetails = () => {
   const { id: tenantId } = useParams();
   const navigate = useNavigate();
   const [tenant, setTenant] = useState(null);
-  // NOTE: no endpoint returns payment history scoped to a tenant — only
-  // GET /bills/:id/payments (per-bill). See Bills for that detail.
+
   const [payments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

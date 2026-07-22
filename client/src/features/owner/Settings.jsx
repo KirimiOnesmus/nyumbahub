@@ -108,8 +108,6 @@ const ProfileTab = () => {
         </div>
       </div>
 
-      {/* There's no PATCH /me endpoint on the backend — profile fields are
-          read-only here rather than a form that silently does nothing. */}
       <NotAvailableNotice>
         Editing your name or phone isn't available yet — there's no profile-update endpoint on the
         backend. This shows your current account details from your last login.
@@ -145,9 +143,7 @@ const SecurityTab = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Matches the backend's actual policy: 10+ chars, at least one upper,
-    // one lower, and one digit. The backend re-validates regardless, but
-    // checking here avoids a pointless round-trip on an obvious miss.
+
     if (form.next.length < 10) {
       setError('New password must be at least 10 characters.');
       return;
@@ -165,9 +161,7 @@ const SecurityTab = () => {
     try {
       await changePassword(form.current, form.next);
       setSaved(true);
-      // The backend invalidates every session (including this one) on a
-      // successful password change — reflect that immediately rather than
-      // leaving a stale, soon-to-fail session in the UI.
+  
       await logout();
       navigate('/login', { replace: true });
     } catch (err) {
@@ -226,9 +220,7 @@ const SecurityTab = () => {
   );
 };
 
-// Preference values shown below are illustrative only — there is no
-// GET/PATCH notification-preferences endpoint on the backend, so nothing
-// here is persisted. Toggles are disabled rather than silently no-op'd.
+
 const NotificationsTab = () => {
   const prefs = {
     paymentReceived: true,
@@ -279,9 +271,6 @@ const NotificationsTab = () => {
   );
 };
 
-// There is no GET /settings/business (or equivalent) endpoint — connection
-// status shown here would be fabricated, so this tab states that plainly
-// instead of displaying a fake "Connected" badge.
 const BusinessTab = () => (
   <div className="flex flex-col gap-5">
     <NotAvailableNotice>

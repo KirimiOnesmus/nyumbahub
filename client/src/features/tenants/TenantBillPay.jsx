@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { LuReceipt, LuTriangleAlert, LuCheck, LuSmartphone } from 'react-icons/lu';
 import { formatCurrency, formatDate } from '../../components/constast/Constasts.js';
 import { getBill, initiateStkPush, getPaymentStatus } from '../../services/tenant.service.js';
+import NyumbaHub from "../../assets/NyumbaHub.png"
 
 const inputClasses =
   'w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm outline-none ' +
@@ -22,7 +23,11 @@ const STATUS_TONE = {
 
 const Shell = ({ children }) => (
   <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-10">
-    <div className="w-full max-w-md">{children}</div>
+    <div className="w-full max-w-md flex flex-col items-center gap-6"> 
+      <img src={NyumbaHub} alt="Nyumba Hub Logo" className="w-32 h-auto" />
+      <div className="w-full max-w-md">{children}</div>
+         </div>
+    
   </div>
 );
 

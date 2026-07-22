@@ -5,8 +5,6 @@ import Card from "../../../components/common/Card.jsx";
 import { getBuildings } from "../../../services/building.service.js";
 import { createExpense } from "../../../services/expense.service.js";
 
-// Mirrors the category set the owner's expense view already renders, so
-// whatever the caretaker logs here slots straight into that breakdown.
 const EXPENSE_CATEGORIES = [
   { id: "maintenance", label: "Maintenance", icon: LuWrench, tone: "bg-amber-50 text-amber-600" },
   { id: "utilities", label: "Utilities", icon: LuZap, tone: "bg-sky-50 text-sky-600" },
@@ -47,7 +45,7 @@ const AddExpense = () => {
   const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
-  const [status, setStatus] = useState("idle"); // idle | submitting | submitted
+  const [status, setStatus] = useState("idle"); 
 
   useEffect(() => {
     let cancelled = false;

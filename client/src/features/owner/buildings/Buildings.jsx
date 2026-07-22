@@ -115,9 +115,7 @@ const Buildings = () => {
   const handleCreated = (building) => {
     setBuildings((prev) => [building, ...prev]);
     setShowAddModal(false);
-    // Explicit redirect back to the list (rather than relying on already
-    // being here) so this keeps working correctly if AddBuilding is ever
-    // opened from somewhere other than this page.
+
     navigate('/owner/buildings', { replace: true });
   };
 

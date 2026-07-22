@@ -169,8 +169,6 @@ const ProfileSection = () => {
   );
 };
 
-//POST /auth/change-password — the backend revokes every refresh token onbsuccess (see password.service.js), so this session is about to stop working regardless of what the UI does. 
-
 const SecuritySection = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();

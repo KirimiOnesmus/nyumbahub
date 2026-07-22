@@ -106,16 +106,7 @@ const AddBuilding = ({ onClose, onCreated }) => {
 
     setSubmitting(true);
     try {
-      // NOTE: totalUnits is NOT sent — the backend's .strict() schema only
-      // accepts { name, address, unitTypes }; it computes unit counts
-      // itself from the unitTypes breakdown (mass-assignment protection).
-      //
-      // POST /buildings responds with { data: { building } } — unwrap()
-      // gives us that whole `data` object, so the actual building entity
-      // is one level deeper, at `.building`. Passing the wrapper itself
-      // up to onCreated (as before) silently produced a card with no id/
-      // name/stats, which is what made a freshly-created building look
-      // "stuck" — clicking it navigated to /owner/buildings/undefined.
+  
       const { building } = await createBuilding({
         name: form.name.trim(),
         address: form.address.trim(),

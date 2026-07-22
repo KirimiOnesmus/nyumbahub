@@ -67,7 +67,7 @@ const AddPayments = () => {
     };
   }, [preselectedBillId]);
 
-  // ---- Building + outstanding-bill pickers (manual entry path) ----
+ 
   const [buildings, setBuildings] = useState([]);
   const [buildingsLoading, setBuildingsLoading] = useState(!preselectedBillId);
   const [buildingId, setBuildingId] = useState('');

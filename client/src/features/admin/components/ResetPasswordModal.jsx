@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { LuX, LuLoaderCircle, LuTriangleAlert, LuCopy, LuCheck, LuKeyRound } from 'react-icons/lu';
 import { resetUserPassword } from '../../../services/admin.service.js';
 
-/**
- * Admin-only: force-resets the login password for a caretaker or owner
- * account. `person` needs { id, name }. On success shows the one-time
- * temporary password returned by the backend so the admin can hand it to
- * the user; calls onDone() once the admin closes out of the confirmation.
- */
+
 const ResetPasswordModal = ({ person, onClose, onDone }) => {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
@@ -32,8 +27,7 @@ const ResetPasswordModal = ({ person, onClose, onDone }) => {
       await navigator.clipboard.writeText(temporaryPassword);
       setCopied(true);
     } catch {
-      // Clipboard access can fail (permissions, insecure context); the
-      // password stays visible on screen either way, so this is non-fatal.
+      // Clipboard access can fail (permissions, insecure context); 
     }
   };
 

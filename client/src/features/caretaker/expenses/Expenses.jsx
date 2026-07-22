@@ -126,8 +126,7 @@ const Expenses = () => {
       { key: "description", label: "Description", render: (r) => r.description || "—" },
       { key: "amount", label: "Amount", render: (r) => formatCurrency(r.amount) },
     ];
-    // Only worth showing "Logged By" when the viewer can see more than
-    // their own entries — i.e. owners/admins looking across caretakers.
+
     if (isOwner) {
       base.splice(3, 0, {
         key: "loggedBy",

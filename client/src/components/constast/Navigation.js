@@ -1,4 +1,4 @@
-// src/config/navigation.js
+
 import {
   LuLayoutDashboard,
   LuBuilding2,
@@ -42,9 +42,7 @@ export const CARETAKER_NAV_ITEMS = [
 
 export const CARETAKER_SETTINGS_ITEM = { to: '/caretaker/settings', label: 'Settings', icon: LuSettings };
 
-// Admin manages accounts (owners, caretakers) and system-level
-// configuration — never buildings/tenants directly, so those are
-// deliberately absent from this list.
+
 export const ADMIN_NAV_ITEMS = [
   { to: '/admin', label: 'Dashboard', icon: LuLayoutDashboard, end: true },
   { to: '/admin/owners', label: 'Owners', icon: LuBuilding2 },

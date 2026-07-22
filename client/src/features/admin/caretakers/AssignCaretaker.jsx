@@ -11,10 +11,7 @@ const inputClasses =
 
 const labelClasses = 'text-xs font-semibold uppercase tracking-widest text-slate-500';
 
-// Admin variant of the owner's AssignCaretaker modal. Same createCaretaker /
-// assignCaretakerToBuilding endpoints — both are documented Owner+Admin —
-// just scoped under /admin so the "back" and list-refresh behavior stays
-// within the admin section.
+
 const AssignCaretaker = ({ caretaker = null, onClose, onSaved }) => {
   const isAssignMode = Boolean(caretaker);
 

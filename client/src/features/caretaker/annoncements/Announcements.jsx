@@ -80,7 +80,7 @@ const DetailRow = ({ icon: Icon, label, value }) => (
   </div>
 );
 
-// Self-contained modal — no shared Modal component exists in common/ yet.
+
 const AnnouncementModal = ({
   announcement,
   onClose,

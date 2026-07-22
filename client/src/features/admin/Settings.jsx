@@ -171,11 +171,7 @@ const SecurityTab = () => {
   );
 };
 
-// System-wide configuration — supportPhone/supportEmail are shown to
-// tenants on bill/payment pages; smsSenderId is the sender name on
-// outbound SMS. GET/PATCH /admin/system-config doesn't exist on the
-// backend yet (see admin.service.js) — this form is built against that
-// contract and will start working once it's added server-side.
+
 const SystemTab = () => {
   const [form, setForm] = useState({ supportPhone: '', supportEmail: '', smsSenderId: '' });
   const [loading, setLoading] = useState(true);

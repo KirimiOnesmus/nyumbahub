@@ -6,7 +6,6 @@ const TONES = {
   brand: 'bg-brand-50 text-brand-700',
 };
 
-/** Small status/label pill. `tone` maps to the semantic palette. */
 const Badge = ({ tone = 'neutral', children, className = '' }) => (
   <span
     className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ${TONES[tone]} ${className}`}

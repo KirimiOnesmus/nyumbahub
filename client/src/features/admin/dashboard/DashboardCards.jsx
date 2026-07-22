@@ -1,10 +1,7 @@
 import { LuBuilding2, LuUsers, LuUserCog, LuUserRound } from 'react-icons/lu';
 import Card from '../../../components/common/Card.jsx';
 
-/**
- * `stats` is sourced from GET /admin/overview. Shape:
- * { totalOwners, activeOwners, totalCaretakers, activeCaretakers, totalBuildings, totalTenants }
- */
+
 const DashboardCards = ({ stats }) => {
   const cards = [
     {

@@ -127,8 +127,7 @@ const CaretakerDetails = () => {
 
     setSavingEdit(true);
     try {
-      // Phone number is immutable via this endpoint — the backend's
-      // updateCaretakerSchema only accepts { name?, email?, isActive? }.
+  
       const { caretaker: updated } = await updateCaretaker(caretaker.id, {
         name: editValues.name.trim(),
         email: editValues.email.trim() || undefined,

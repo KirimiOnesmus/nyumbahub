@@ -2,13 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { LuWallet, LuArrowRight } from 'react-icons/lu';
 import Card from '../../../components/common/Card.jsx';
 
-/**
- * There is no GET /payments (or equivalent cross-building payments list) on
- * the backend — only GET /bills/:id/payments (per-bill M-Pesa history) and
- * POST /bills/:id/mark-paid (manual/cash reconciliation) exist. Rather than
- * fabricate an aggregate list, this page states that and points to Bills,
- * where real balance/status/mark-paid actions live.
- */
+
 const Payment = () => {
   const navigate = useNavigate();
 

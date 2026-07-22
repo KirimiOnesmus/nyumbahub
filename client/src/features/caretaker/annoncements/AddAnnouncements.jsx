@@ -116,8 +116,7 @@ const AddAnnouncements = () => {
     };
   }, [audience, buildingId]);
 
-  // Active tenants with a phone number on file — the only ones the backend will actually message. Pending/moved-out or phone-less tenants are shown
-  // disabled rather than hidden, so it's clear *why* they can't be selected.
+
 
   const selectableTenantIds = useMemo(
     () =>

@@ -19,7 +19,7 @@ const InviteTenantModal = ({ onClose, assignedBuildings }) => {
   const [unitsError, setUnitsError] = useState('');
   const [phone, setPhone] = useState('');
   const [link, setLink] = useState(null);
-  const [status, setStatus] = useState('idle'); // idle | generating | generated
+  const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 

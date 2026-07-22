@@ -21,7 +21,7 @@ const collectionTone = (rate) => {
 
 const MONTH_LABEL_FORMATTER = new Intl.DateTimeFormat('en-KE', { month: 'short', year: 'numeric' });
 
-// "2026-07" -> "Jul 2026". Parsed as UTC to avoid local-timezone month drift.
+
 const formatPeriodLabel = (period) => {
   const [year, month] = period.split('-').map(Number);
   return MONTH_LABEL_FORMATTER.format(new Date(Date.UTC(year, month - 1, 1)));

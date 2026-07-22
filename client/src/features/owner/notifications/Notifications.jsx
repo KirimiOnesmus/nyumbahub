@@ -66,7 +66,7 @@ const DetailRow = ({ icon: Icon, label, value }) => (
   </div>
 );
 
-// Self-contained modal — no shared Modal component exists in common/ yet.
+
 const AnnouncementModal = ({ announcement, onClose, onSendAgain, sendingAgain }) => {
   if (!announcement) return null;
   const hasFailures = announcement.failureCount > 0;
@@ -151,8 +151,8 @@ const Notifications = () => {
         const { buildings: buildingList } = await listBuildings({ page: 1, limit: 100 });
         if (!cancelled) setBuildings(buildingList);
 
-        // No portfolio-wide announcements endpoint exists — fetch per building and
-        // flatten, same pattern used on Reports/Tenants for other building-scoped data.
+        
+      
         const perBuilding = await Promise.all(
           buildingList.map((b) =>
             listAnnouncements(b.id, { page: 1, limit: 100 }).catch(() => ({ announcements: [] }))
@@ -218,8 +218,8 @@ const Notifications = () => {
       setAnnouncements((prev) => [{ ...resent, buildingName: announcement.buildingName }, ...prev]);
       setSelectedId(resent.id);
     } catch {
-      // Surfaced implicitly: the modal stays open on the original announcement and
-      // the button re-enables, letting the owner retry.
+      // Surfaced implicitly: the modal stays open on the original announcement and the button re-enables, letting the owner retry.
+   
     } finally {
       setSendingAgainId(null);
     }

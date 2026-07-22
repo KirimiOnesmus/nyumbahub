@@ -17,14 +17,7 @@ const InfoRow = ({ icon: Icon, label, value }) => (
   </div>
 );
 
-/**
- * There is no GET /payments/:id on the backend — only the bounded, recent
- * "list payments for a building" endpoint (see Payments.jsx). So this page
- * can only render a payment it was handed via router state from that list;
- * it can't independently fetch-by-id on a direct link or hard refresh.
- * That's a real constraint of the current API, not a bug — we surface it
- * honestly instead of pretending a lookup happened.
- */
+
 const PaymentDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();

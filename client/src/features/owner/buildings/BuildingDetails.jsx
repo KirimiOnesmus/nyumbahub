@@ -35,11 +35,7 @@ const StatCard = ({ icon: Icon, label, value }) => (
   </Card>
 );
 
-// Mongo ObjectIds are 24 hex chars. This is a cheap client-side sanity
-// check only — the server is still the real authority and will reject
-// anything malformed with its own CastError handling — but it lets us
-// fail fast with a clear message instead of firing a request we already
-// know is broken (e.g. a stale/corrupted `id` from an earlier bug).
+
 const isValidObjectId = (value) => typeof value === 'string' && /^[a-f0-9]{24}$/i.test(value);
 
 const BuildingDetails = () => {

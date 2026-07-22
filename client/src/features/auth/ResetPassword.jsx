@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { FaArrowRight, FaEye, FaEyeSlash, FaSpinner } from 'react-icons/fa'
 import { resetPassword } from '../../services/auth.service.js'
+import NyumbaHub from "../../assets/NyumbaHub.png";
 
 const tokens = {
   ink: '#16241F',
@@ -14,9 +15,7 @@ const tokens = {
   muted: '#6B7268',
 }
 
-// Mirrors the server's passwordSchema (auth.validators.js) so the person gets
-// immediate feedback instead of a round trip just to learn their password is
-// too short. The server remains the source of truth — this is UX only.
+
 const RULES = [
   { test: (v) => v.length >= 10 && v.length <= 128, label: 'At least 10 characters' },
   { test: (v) => /[a-z]/.test(v), label: 'A lowercase letter' },
@@ -91,6 +90,9 @@ const ResetPassword = () => {
       style={{ backgroundColor: tokens.paper, fontFamily: 'Inter, system-ui, sans-serif' }}
     >
       <div className="w-full max-w-sm">
+        <div className="flex justify-center mb-6">
+          <img src={NyumbaHub} alt="NyumbaHub Logo" className="w-32 h-auto mb-6" />
+        </div>
         <div
           className="text-xs tracking-widest uppercase mb-3"
           style={{ fontFamily: 'IBM Plex Mono, monospace', color: tokens.muted }}

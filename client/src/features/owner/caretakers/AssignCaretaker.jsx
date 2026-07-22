@@ -90,8 +90,7 @@ const AssignCaretaker = ({ caretaker = null, onClose, onSaved }) => {
       const assignedBuildings = buildings.filter((b) => selectedBuildingIds.includes(b.id));
 
       if (isAssignMode) {
-        // The real endpoint assigns ONE building per call — loop over the
-        // selection sequentially rather than sending an array.
+     
         for (const buildingId of selectedBuildingIds) {
           await assignCaretakerToBuilding(caretaker.id, buildingId);
         }
@@ -106,9 +105,7 @@ const AssignCaretaker = ({ caretaker = null, onClose, onSaved }) => {
           email: email.trim() || undefined,
           buildingIds: selectedBuildingIds,
         });
-        // The temp password is shown ONCE here — it must be delivered to the
-        // caretaker out-of-band (e.g. SMS/WhatsApp). It is never logged or
-        // retrievable again after this modal closes.
+
         setPendingCaretaker({ ...created, buildings: assignedBuildings });
         setCreatedTempPassword(tempPassword);
       }

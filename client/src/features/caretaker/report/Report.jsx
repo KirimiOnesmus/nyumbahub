@@ -25,15 +25,7 @@ const formatDate = (value) => {
 };
 const daysSince = (value) => (value ? Math.max(0, Math.floor((Date.now() - new Date(value)) / 86_400_000)) : null);
 
-const RECENT_PAYMENTS_LIMIT = 20; // backend cap — see payment.validators.js
-
-// GET /reports/portfolio and /reports/portfolio/trend are Owner/Admin only,
-// so there's no cross-building aggregate or month-by-month trend available
-// to a caretaker. What IS available: /reports/building/:buildingId for a
-// single "YYYY-MM" period or all-time, and /reports/building/:buildingId/overdue-tenants.
-// "This Month" is the only real month option — there's no rolling
-// last-3/6-months window on the backend, so we don't fabricate one (same
-// convention the owner's Reports page uses).
+const RECENT_PAYMENTS_LIMIT = 20; 
 const thisMonthValue = new Date().toISOString().slice(0, 7);
 
 const selectClasses =
@@ -65,11 +57,11 @@ const StatCard = ({ icon: Icon, iconBg, iconColor, label, value }) => (
 
 const Report = () => {
   const [reportId, setReportId] = useState('revenue');
-  const [period, setPeriod] = useState('all_time'); // 'all_time' | thisMonthValue
+  const [period, setPeriod] = useState('all_time'); 
   const [buildings, setBuildings] = useState([]);
   const [buildingFilter, setBuildingFilter] = useState('all');
 
-  const [buildingReports, setBuildingReports] = useState([]); // one per building: billed/collected/occupancy
+  const [buildingReports, setBuildingReports] = useState([]); 
   const [overdueTenants, setOverdueTenants] = useState([]);
   const [payments, setPayments] = useState([]);
 
@@ -138,7 +130,7 @@ const Report = () => {
     () => (buildingFilter === 'all' ? buildingReports : buildingReports.filter((r) => r.buildingId === buildingFilter)),
     [buildingReports, buildingFilter]
   );
-  const occupancyRows = revenueRows; // same underlying object — occupancy fields are period-independent
+  const occupancyRows = revenueRows; 
   const overdueRows = useMemo(
     () => (buildingFilter === 'all' ? overdueTenants : overdueTenants.filter((t) => t.buildingId === buildingFilter)),
     [overdueTenants, buildingFilter]

@@ -19,10 +19,7 @@ import Loader from '../../../components/common/Loader.jsx';
 import EmptyState from '../../../components/common/EmptyState.jsx';
 import { getSystemHealth, getActivityLog } from '../../../services/admin.service.js';
 
-// How often the feed silently re-polls in the background. There's no
-// websocket/streaming transport anywhere else in this app, so a bounded
-// poll is the "real-time" mechanism consistent with the existing
-// architecture rather than a new dependency.
+
 const POLL_INTERVAL_MS = 15000;
 
 const SERVICE_ICONS = {

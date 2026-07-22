@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaEye, FaEyeSlash, FaArrowRight, FaSpinner } from 'react-icons/fa'
 import { useAuth } from '../../context/AuthContext.jsx'
+import NyumbaHub from "../../assets/NyumbaHub.png"
 
 const tokens = {
   ink: '#16241F',      
@@ -52,6 +53,9 @@ const Login = () => {
       style={{ backgroundColor: tokens.paper, fontFamily: 'Inter, system-ui, sans-serif' }}
     >
       <div className="w-full max-w-sm">
+        <div className="flex justify-center mb-6"> 
+          <img src={NyumbaHub} alt="NyumbaHub Logo" className="w-32 h-auto mb-6" />
+        </div>
         <div
           className="text-xs tracking-widest uppercase mb-3"
           style={{ fontFamily: 'IBM Plex Mono, monospace', color: tokens.muted }}

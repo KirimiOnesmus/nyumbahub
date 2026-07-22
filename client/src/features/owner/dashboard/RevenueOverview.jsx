@@ -10,11 +10,6 @@ const MAINTENANCE_ICONS = {
   building: LuBuilding2,
 };
 
-/**
- * `revenue` — [{ month, revenue }] from GET /reports/portfolio?range=...
- * `delinquency` — { count, buildingName, daysLate } from the overdue report
- * `maintenance` — [{ id, title, location, when, kind }] (later: a maintenance module)
- */
 const RevenueOverview = ({ revenue, delinquency, maintenance }) => {
   const [range, setRange] = useState(RANGE_OPTIONS[0]);
 

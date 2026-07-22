@@ -51,8 +51,6 @@ export const AuthProvider = ({ children }) => {
         if (cancelled) return;
         setAccessToken(refreshData.accessToken);
 
-        // The refresh endpoint only proves the session is still valid — it doesn't return identity.
-
         const meData = await unwrap(api.get('/auth/me'));
         if (cancelled) return;
         setUser(meData.user);

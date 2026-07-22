@@ -1,5 +1,5 @@
 import api, { unwrap } from './axios.js';
-/
+
 export const listBuildings = (params = {}) => unwrap(api.get('/buildings', { params }));
 
 

@@ -1,12 +1,7 @@
 import { LuSearch, LuBell, LuCircleHelp, LuMenu } from 'react-icons/lu';
 import { getRoleLabel, getInitials } from '../../utils/userDisplay.js';
 
-/**
- * `user` is expected to be the authenticated user object from AuthContext
- * (never trusted client-only mock data). It may briefly be `null` while
- * auth is settling — every field is read defensively so that edge case
- * degrades to a placeholder instead of throwing.
- */
+
 const Navbar = ({ user, onMenuClick }) => {
   const name = user?.name?.trim() || 'Account';
   const roleLabel = getRoleLabel(user?.role);

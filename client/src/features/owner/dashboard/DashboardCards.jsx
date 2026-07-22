@@ -3,11 +3,7 @@ import Card from '../../../components/common/Card.jsx';
 
 const currency = (value) => `KES ${value.toLocaleString('en-KE')}`;
 
-/**
- * `stats` is sourced from GET /reports/portfolio. Shape:
- * { activeBuildings, occupiedUnits, totalUnits, monthlyRevenue, revenueGrowthPct,
- *   outstandingRent, totalCaretakers }
- */
+
 const DashboardCards = ({ stats }) => {
   const occupancyPct = Math.round((stats.occupiedUnits / stats.totalUnits) * 100);
 

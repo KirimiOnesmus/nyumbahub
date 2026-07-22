@@ -2,10 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { LuWallet, LuArrowLeft } from 'react-icons/lu';
 import Card from '../../../components/common/Card.jsx';
 
-/**
- * Same gap as Payment.jsx — no standalone GET /payments/:id endpoint
- * exists. Payment records only exist scoped to a bill (GET /bills/:id/payments).
- */
 const PaymentDetails = () => {
   const navigate = useNavigate();
 

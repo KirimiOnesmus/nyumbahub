@@ -16,7 +16,7 @@ import Badge from '../../../components/common/Badge.jsx';
 import EmptyState from '../../../components/common/EmptyState.jsx';
 import Loader from '../../../components/common/Loader.jsx';
 import { getPortfolioReport, getOverdueTenants } from '../../../services/report.service.js';
-// import { getPortfolioReport } from '../../../services/report.service.js';
+
 import { listBuildings } from '../../../services/building.service.js';
 import { buildCsv, downloadCsv } from '../../../utils/exportCsv.js';
 

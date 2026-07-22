@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaArrowLeft, FaArrowRight, FaSpinner } from 'react-icons/fa'
 import { requestPasswordReset } from '../../services/auth.service.js'
+import NyumbaHub from "../../assets/NyumbaHub.png"
 
 const tokens = {
   ink: '#16241F',
@@ -25,15 +26,11 @@ const ForgotPassword = () => {
     setError('')
     setLoading(true)
     try {
-      // The backend intentionally returns the same generic message whether or
-      // not the phone number is registered, to avoid leaking account
-      // existence. We show that same message regardless of outcome here too.
+ 
       await requestPasswordReset(phone)
       setSubmitted(true)
     } catch (err) {
-      // Only surface something other than the generic success state for
-      // genuine client-side problems (e.g. malformed request, rate limited).
-      // Never imply whether the phone number exists in our system.
+      
       if (err.status === 429) {
         setError('Too many requests. Please wait a while before trying again.')
       } else {
@@ -50,6 +47,9 @@ const ForgotPassword = () => {
       style={{ backgroundColor: tokens.paper, fontFamily: 'Inter, system-ui, sans-serif' }}
     >
       <div className="w-full max-w-sm">
+        <div className="flex justify-center mb-6">
+          <img src={NyumbaHub} alt="NyumbaHub Logo" className="w-32 h-auto mb-6" />
+        </div>
         <div
           className="text-xs tracking-widest uppercase mb-3"
           style={{ fontFamily: 'IBM Plex Mono, monospace', color: tokens.muted }}

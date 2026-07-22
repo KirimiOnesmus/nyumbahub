@@ -63,7 +63,7 @@ const AddTenants = () => {
 
   const setField = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  // Load the caretaker's assigned buildings once on mount.
+
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
@@ -84,7 +84,6 @@ const AddTenants = () => {
     };
   }, []);
 
-  // Reload vacant units whenever the selected building changes.
   useEffect(() => {
     let cancelled = false;
     setForm((f) => ({ ...f, unitId: '' }));
@@ -111,7 +110,7 @@ const AddTenants = () => {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [form.buildingId]);
 
   const selectedUnit = vacantUnits.find((u) => u.id === form.unitId);
@@ -138,8 +137,7 @@ const AddTenants = () => {
 
     setSubmitting(true);
     try {
-      // monthlyRent is intentionally never sent — rent lives on the Unit only,
-      // and the backend's .strict() schema rejects any extra fields.
+
       await createTenant({
         name: form.name.trim(),
         phone: form.phone.trim(),
