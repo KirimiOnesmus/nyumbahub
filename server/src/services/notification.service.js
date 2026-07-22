@@ -7,7 +7,7 @@ const {
   BILL_TYPE_LABELS,
   NOTIFICATION_STATUS,
   NOTIFICATION_MESSAGE_TYPE,
-  NOTIFICATION_MAX_ATTEMPTS,
+  NOTIFICATION_MAX_ATTEMPTS, 
   NOTIFICATION_RETRY_BACKOFF_MS,
 } = require('../config/constants');
 
@@ -77,7 +77,7 @@ async function sendTemplateWithRetry(phone, messageType, params) {
   }
 
   logger.error(
-    { messageType, attempts: NOTIFICATION_MAX_ATTEMPTS },
+    { messageType, attempts: NOTIFICATION_MAX_ATTEMPTS, lastError, phoneLast4: String(phone).slice(-4) },
     'Notification send failed after exhausting retries.'
   );
 
