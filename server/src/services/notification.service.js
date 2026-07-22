@@ -38,7 +38,7 @@ function buildPreviewText(messageType, params) {
     case NOTIFICATION_MESSAGE_TYPE.INVITE:
       return `Hi ${params.name}, you've been invited as a ${params.roleLabel}. Set up your account: ${params.inviteLink}`;
     case NOTIFICATION_MESSAGE_TYPE.WELCOME_CREDENTIALS:
-      // Never log this preview outside NODE_ENV !== 'production' (see sendOnce below).
+   
       return `Hi ${params.name}, your ${params.roleLabel} account is ready. Temp password: ${params.tempPassword}. Log in: ${params.loginUrl}`;
     default:
       return JSON.stringify(params);
@@ -111,13 +111,7 @@ async function sendAnnouncementWithRetry(phone, messageBody) {
 }
 
 
-/**
- * Sends an account-invite link (owner/caretaker onboarding). Never throws —
- * returns { status, attempts, lastError, waMessageId } so the caller can
- * decide how to react (e.g. still create the invite record, surface a
- * "resend" action) rather than the whole request failing on a WhatsApp
- * outage.
- */
+
 async function sendInviteWithRetry(phone, { name, roleLabel, inviteLink }) {
   return sendTemplateWithRetry(phone, NOTIFICATION_MESSAGE_TYPE.INVITE, {
     name: name || 'there',
@@ -127,11 +121,7 @@ async function sendInviteWithRetry(phone, { name, roleLabel, inviteLink }) {
 }
 
 
-/**
- * Sends a freshly generated temporary password out-of-band via WhatsApp.
- * This is the ONLY place a temp password should ever be transmitted —
- * never return it in an HTTP response body or write it to logs.
- */
+
 async function sendWelcomeCredentialsWithRetry(phone, { name, roleLabel, tempPassword, loginUrl }) {
   return sendTemplateWithRetry(phone, NOTIFICATION_MESSAGE_TYPE.WELCOME_CREDENTIALS, {
     name: name || 'there',
@@ -158,5 +148,5 @@ module.exports = {
   sendInviteWithRetry,
   sendWelcomeCredentialsWithRetry,
   sendPasswordResetToken,
-  buildPreviewText, // exported for unit testing
+  buildPreviewText, 
 };
