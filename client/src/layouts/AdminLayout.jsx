@@ -23,13 +23,15 @@ const AdminLayout = () => {
   }, [menuOpen]);
 
   return (
-    <div className="h-dvh overflow-hidden flex bg-canvas print:h-auto print:overflow-visible">
-      <Sidebar
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        navItems={ADMIN_NAV_ITEMS}
-        settingsItem={ADMIN_SETTINGS_ITEM}
-      />
+    <div className="h-dvh overflow-hidden flex bg-canvas">
+     
+        <Sidebar
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          navItems={ADMIN_NAV_ITEMS}
+          settingsItem={ADMIN_SETTINGS_ITEM}
+        />
+    
       <div className="flex-1 min-w-0 h-full min-h-0 flex flex-col overflow-y-auto overscroll-contain print:h-auto print:overflow-visible">
         <Navbar user={user} onMenuClick={() => setMenuOpen(true)} />
         <main className="flex-1 px-4 py-6 md:px-8 md:py-8">

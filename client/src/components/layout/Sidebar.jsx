@@ -76,7 +76,9 @@ const Sidebar = ({
           </button>
         </div>
 
-        <nav className="min-h-0 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
+       
+
+        <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
           {navItems.map((item) => (
             <NavItem key={item.to} {...item} onNavigate={onClose} />
           ))}
@@ -87,8 +89,7 @@ const Sidebar = ({
             </div>
           )}
         </nav>
-
-        <div className="border-t border-slate-200 bg-white px-4 pt-2 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+         <div className="shrink-0 px-4 pb-2">
           <button
             type="button"
             onClick={handleLogout}
