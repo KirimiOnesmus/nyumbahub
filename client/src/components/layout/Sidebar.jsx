@@ -76,7 +76,20 @@ const Sidebar = ({
           </button>
         </div>
 
-        <div className="shrink-0 px-4 pb-2">
+       
+
+        <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
+          {navItems.map((item) => (
+            <NavItem key={item.to} {...item} onNavigate={onClose} />
+          ))}
+
+          {settingsItem && (
+            <div className="pt-4 mt-4 border-t border-slate-200">
+              <NavItem {...settingsItem} onNavigate={onClose} />
+            </div>
+          )}
+        </nav>
+         <div className="shrink-0 px-4 pb-2">
           <button
             type="button"
             onClick={handleLogout}
@@ -92,18 +105,6 @@ const Sidebar = ({
             {loggingOut ? 'Logging out…' : 'Logout'}
           </button>
         </div>
-
-        <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
-          {navItems.map((item) => (
-            <NavItem key={item.to} {...item} onNavigate={onClose} />
-          ))}
-
-          {settingsItem && (
-            <div className="pt-4 mt-4 border-t border-slate-200">
-              <NavItem {...settingsItem} onNavigate={onClose} />
-            </div>
-          )}
-        </nav>
       </aside>
     </>
   );
