@@ -8,7 +8,7 @@ const Navbar = ({ user, onMenuClick }) => {
   const initials = getInitials(user?.name);
 
   return (
-    <header className="w-full shrink-0 border-b border-slate-200 bg-white">
+    <header className="sticky top-0 z-30 w-full shrink-0 border-b border-slate-200 bg-white">
       <div className="h-16 px-4 md:px-8 flex items-center justify-between gap-3 md:gap-6">
         <button
           type="button"

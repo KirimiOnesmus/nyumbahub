@@ -32,9 +32,7 @@ const CaretakerLayout = () => {
           settingsItem={CARETAKER_SETTINGS_ITEM}
       />
       <div className="flex-1 min-w-0 h-full min-h-0 flex flex-col overflow-y-auto overscroll-contain print:h-auto print:overflow-visible">
-        <div className="sticky top-0 z-30 shrink-0">
-          <Navbar user={user} onMenuClick={() => setMenuOpen(true)} />
-        </div>
+        <Navbar user={user} onMenuClick={() => setMenuOpen(true)} />
         <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
           <Outlet />
         </main>
