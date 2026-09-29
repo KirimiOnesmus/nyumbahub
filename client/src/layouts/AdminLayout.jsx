@@ -23,7 +23,7 @@ const AdminLayout = () => {
   }, [menuOpen]);
 
   return (
-    <div className="min-h-screen flex bg-canvas">
+    <div className="h-dvh overflow-hidden flex bg-canvas print:h-auto print:overflow-visible">
       <div className="print:hidden">
         <Sidebar
           open={menuOpen}
@@ -32,8 +32,8 @@ const AdminLayout = () => {
           settingsItem={ADMIN_SETTINGS_ITEM}
         />
       </div>
-      <div className="flex-1 min-w-0 flex flex-col">
-        <div className="print:hidden">
+      <div className="flex-1 min-w-0 h-full min-h-0 flex flex-col overflow-y-auto overscroll-contain print:h-auto print:overflow-visible">
+        <div className="print:hidden sticky top-0 z-30 shrink-0">
           <Navbar user={user} onMenuClick={() => setMenuOpen(true)} />
         </div>
         <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
