@@ -1,7 +1,23 @@
 
+const hasFormulaPrefix = (value) => {
+  let index = 0;
+  while (index < value.length) {
+    const code = value.charCodeAt(index);
+    if (code <= 0x20 || code === 0x7f || code === 0xfeff) {
+      index += 1;
+      continue;
+    }
+    return '=+-@'.includes(value[index]);
+  }
+  return false;
+};
+
 const escapeCell = (value) => {
-  const str = value === null || value === undefined ? '' : String(value);
-  if (/[",\n]/.test(str)) {
+  let str = value === null || value === undefined ? '' : String(value);
+  if (hasFormulaPrefix(str)) {
+    str = `'${str}`;
+  }
+  if (/[",\r\n]/.test(str)) {
     return `"${str.replace(/"/g, '""')}"`;
   }
   return str;
