@@ -56,7 +56,7 @@ const Sidebar = ({
       )}
 
       <aside
-        className={`w-64 shrink-0 bg-white border-r border-slate-200 h-screen h-dvh min-h-0 flex flex-col
+        className={`w-64 shrink-0 bg-white border-r border-slate-200 h-screen h-dvh min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto]
           fixed top-0 left-0 z-50 transition-transform duration-200 ease-out
           lg:sticky lg:translate-x-0
           ${open ? 'translate-x-0' : '-translate-x-full'}`}
@@ -76,7 +76,7 @@ const Sidebar = ({
           </button>
         </div>
 
-        <nav className="flex-1 min-h-0 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
+        <nav className="min-h-0 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
           {navItems.map((item) => (
             <NavItem key={item.to} {...item} onNavigate={onClose} />
           ))}
