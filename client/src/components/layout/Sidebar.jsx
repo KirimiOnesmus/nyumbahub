@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LuCircleHelp, LuLogOut, LuX, LuLoaderCircle } from 'react-icons/lu';
+import { LuLogOut, LuX, LuLoaderCircle } from 'react-icons/lu';
 import { useAuth } from '../../context/AuthContext.jsx';
 
 const NavItem = ({ to, label, icon: Icon, end, onNavigate }) => (
@@ -56,7 +56,7 @@ const Sidebar = ({
       )}
 
       <aside
-        className={`w-64 shrink-0 bg-white border-r border-slate-200 h-screen h-dvh min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto]
+        className={`relative w-64 shrink-0 bg-white border-r border-slate-200 h-dvh max-h-dvh min-h-0 flex flex-col overflow-hidden
           fixed top-0 left-0 z-50 transition-transform duration-200 ease-out
           lg:sticky lg:translate-x-0
           ${open ? 'translate-x-0' : '-translate-x-full'}`}
@@ -76,7 +76,24 @@ const Sidebar = ({
           </button>
         </div>
 
-        <nav className="min-h-0 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
+        <div className="shrink-0 px-4 pb-2">
+          <button
+            type="button"
+            onClick={handleLogout}
+            disabled={loggingOut}
+            aria-busy={loggingOut}
+            className="flex min-h-11 w-full items-center gap-3 rounded-xl bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loggingOut ? (
+              <LuLoaderCircle className="animate-spin" aria-hidden="true" />
+            ) : (
+              <LuLogOut aria-hidden="true" />
+            )}
+            {loggingOut ? 'Logging out…' : 'Logout'}
+          </button>
+        </div>
+
+        <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain thin-scrollbar px-4 py-2 space-y-1">
           {navItems.map((item) => (
             <NavItem key={item.to} {...item} onNavigate={onClose} />
           ))}
@@ -87,32 +104,6 @@ const Sidebar = ({
             </div>
           )}
         </nav>
-
-        <div className="shrink-0 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] space-y-2">
-          <div className="flex flex-col gap-1 pt-2 border-t border-slate-200">
-            {/* <button
-              type="button"
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-slate-500 cursor-pointer hover:bg-canvas hover:text-slate-700 transition-colors"
-            >
-              <LuCircleHelp aria-hidden="true" />
-              Help Center
-            </button> */}
-            <button
-              type="button"
-              onClick={handleLogout}
-              disabled={loggingOut}
-              aria-busy={loggingOut}
-              className="flex items-center gap-3 px-3 py-4 rounded-xl text-sm font-medium text-red-500 cursor-pointer hover:bg-red-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              {loggingOut ? (
-                <LuLoaderCircle className="animate-spin" aria-hidden="true" />
-              ) : (
-                <LuLogOut aria-hidden="true" />
-              )}
-              {loggingOut ? 'Logging out…' : 'Logout'}
-            </button>
-          </div>
-        </div>
       </aside>
     </>
   );
