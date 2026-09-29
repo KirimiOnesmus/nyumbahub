@@ -90,19 +90,19 @@ const Sidebar = ({
 
         <div className="px-4 pb-5 space-y-2">
           <div className="flex flex-col gap-1 pt-2 border-t border-slate-200">
-            <button
+            {/* <button
               type="button"
               className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-slate-500 cursor-pointer hover:bg-canvas hover:text-slate-700 transition-colors"
             >
               <LuCircleHelp aria-hidden="true" />
               Help Center
-            </button>
+            </button> */}
             <button
               type="button"
               onClick={handleLogout}
               disabled={loggingOut}
               aria-busy={loggingOut}
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-red-500 cursor-pointer hover:bg-red-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              className="flex items-center gap-3 px-3 py-4 rounded-xl text-sm font-medium text-red-500 cursor-pointer hover:bg-red-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loggingOut ? (
                 <LuLoaderCircle className="animate-spin" aria-hidden="true" />
